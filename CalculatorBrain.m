@@ -63,53 +63,49 @@
     
         // add
         if ([operation isEqualToString:@"+"]) {
-            result = [self popOperandOffProgramStack] + [self popOperandOffProgramStack];
+            result = [self popOperandOffProgramStack:stack] + [self popOperandOffProgramStack:stack];
         } 
         
         // multiply
         else if ([@"*" isEqualToString:operation]) {
-            result = [self popOperandOffProgramStack] * [self popOperandOffProgramStack];
+            result = [self popOperandOffProgramStack:stack] * [self popOperandOffProgramStack:stack];
         } 
         
         // subtract
         else if ([operation isEqualToString:@"-"]) {
-            double subtrahend = [self popOperandOffProgramStack];
-            result = [self popOperandOffProgramStack] - subtrahend;
+            double subtrahend = [self popOperandOffProgramStack:stack];
+            result = [self popOperandOffProgramStack:stack] - subtrahend;
         } 
         
         // divide
         else if ([operation isEqualToString:@"/"]) {
-            double divisor = [self popOperandOffProgramStack];
-            if (divisor) result = [self popOperandOffProgramStack] / divisor;
+            double divisor = [self popOperandOffProgramStack:stack];
+            if (divisor) result = [self popOperandOffProgramStack:stack] / divisor;
         }
         
         // sin
         else if ([operation isEqualToString:@"sin"]) {
-            result = sin([self popOperandOffProgramStack]);
+            result = sin([self popOperandOffProgramStack:stack]);
         }
         
         // cos
         else if ([operation isEqualToString:@"cos"]) {
-            result = cos([self popOperandOffProgramStack]);
+            result = cos([self popOperandOffProgramStack:stack]);
         }
         
         // sqrt
         else if ([operation isEqualToString:@"sqrt"]) {
-            result = sqrt([self popOperandOffProgramStack]);
+            result = sqrt([self popOperandOffProgramStack:stack]);
         }
         
         // π
         else if ([operation isEqualToString:@"π"]) {
             result = M_PI;
         }
-        
-        // e
-        else if ([operation isEqualToString:@"e"]) {
-            result = M_E;
-        }
+    }
     
     //push the result back onto the stack so the next operation can use it
-    [self pushOperand:result];
+    //[self pushOperand:result];
     
     return result;
 }
