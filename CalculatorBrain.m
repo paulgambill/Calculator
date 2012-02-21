@@ -46,7 +46,7 @@
     return [[self class] runProgram:self.program];
 }
 
-- (double)popOperandOffProgramStackOffProgramStack:(NSMutableArray *)stack
++ (double)popOperandOffProgramStack:(NSMutableArray *)stack
 {
     double result = 0;
     
@@ -119,13 +119,13 @@
     [self.programStack removeAllObjects];
 }
 
-;
++ (double)runProgram:(id)program
+{
+    NSMutableArray *stack;
     if ([program isKindOfClass:[NSArray class]]) {
-   [self.programStack addObject:operation];
-    return [[self class] runProgram:self.program];[self.programStack addObject:operation];
-    return [[self class] runProgram:self.program];[self.programStack addObject:operation];
-    return [[self class] runProgram:self.program];     stack = [program mutableCopy];
+        stack = [program mutableCopy];
     }
     return [self popOperandOffProgramStack:stack];
 }
+    
 @end
