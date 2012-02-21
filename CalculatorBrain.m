@@ -24,21 +24,27 @@
     return _programStack;
 }
 
+
+// program getter
 - (id)program
 {
     return [self.programStack copy];
 }
+
 
 + (NSString *)descriptionOfProgram:(id)program
 {
     return @"Implement this in Homework #2";
 }
 
+
+// adds operand to top of stack
 - (void)pushOperand:(double)operand
 {
     NSNumber *operandObject = [NSNumber numberWithDouble:operand];
     [self.programStack addObject:operandObject];
 }
+
 
 - (double)performOperation:(NSString *)operation
 {
@@ -115,7 +121,7 @@
     [self.programStack removeAllObjects];
 }
 
-+ (double)runProgram:(id)program
++ (double)runProgram:(id)program //usingVariableValues:(NSDictionary *)variableValues
 {
     NSMutableArray *stack;
     if ([program isKindOfClass:[NSArray class]]) {
