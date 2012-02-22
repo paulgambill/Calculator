@@ -10,20 +10,55 @@
 
 @interface CalculatorBrain()
 @property (nonatomic, strong) NSMutableArray *programStack;
+@property (nonatomic, strong) NSDictionary *variableValues;
 @end
 
 @implementation CalculatorBrain
 
 @synthesize programStack = _programStack;
+@synthesize variableValues = _variableValues;
 
+// variableValues getter
+- (NSDictionary *)variableValues
+{
+    if (!_variableValues) {
+        _variableValues = [[NSDictionary alloc] init];
+    }
+    return _variableValues;
+}
+
+// programStack getter
 - (NSMutableArray *)programStack
 {
     if (!_programStack) {
         _programStack = [[NSMutableArray alloc] init];
     }
     return _programStack;
-}
+} 
 
+
+// variableValues get written here
+- (void)writeVariableValuesToDictionary:(NSString *)testName
+{
+    if ([testName isEqualToString:@"Test 1"]) {
+        self.variableValues = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [NSNumber numberWithInt:1], @"x",
+                               [NSNumber numberWithInt:2], @"y",
+                               [NSNumber numberWithInt:3], @"z", nil];
+    } 
+    else if ([testName isEqualToString:@"Test 2"]) {
+        self.variableValues = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [NSNumber numberWithInt:4], @"x",
+                               [NSNumber numberWithInt:5], @"y",
+                               [NSNumber numberWithInt:6], @"z", nil];
+    } 
+    else if ([testName isEqualToString:@"Test 3"]) {
+        self.variableValues = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [NSNumber numberWithInt:7], @"x",
+                               [NSNumber numberWithInt:8], @"y",
+                               [NSNumber numberWithInt:9], @"z", nil];
+    }    
+}
 
 // program getter
 - (id)program
@@ -51,6 +86,7 @@
     [self.programStack addObject:operation];
     return [[self class] runProgram:self.program];
 }
+
 
 + (double)popOperandOffProgramStack:(NSMutableArray *)stack
 {

@@ -13,10 +13,16 @@
 - (void)pushOperand:(double)operand;
 - (double)performOperation:(NSString *)operation;
 - (void)emptyStack;
+- (NSDictionary *)writeVariableValuesToDictionary:(NSString *)testName;
+
 
 @property (nonatomic, readonly) id program;
 
+
+
 + (NSString *)descriptionOfProgram:(id)program;
 + (double)runProgram:(id)program;
+
+//+ (NSSet *)variablesUsedInProgram:(id)program;
 
 @end

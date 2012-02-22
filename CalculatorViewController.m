@@ -68,4 +68,10 @@
     self.history.text = @"";
 }
 
+- (IBAction)testPressed:(UIButton *)sender 
+{
+    NSString *testName = sender.currentTitle;
+    [self.brain writeVariableValuesToDictionary:testName];
+}
+
 @end
