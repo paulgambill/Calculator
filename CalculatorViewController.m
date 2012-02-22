@@ -12,6 +12,7 @@
 @interface CalculatorViewController()
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
 @property (nonatomic, strong) CalculatorBrain *brain;
+@property (nonatomic, strong) NSString *selectedTest;
 @end
 
 @implementation CalculatorViewController
@@ -20,6 +21,7 @@
 @synthesize history = _history;
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
 @synthesize brain = _brain;
+@synthesize selectedTest = _selectedTest;
 
 - (CalculatorBrain *)brain
 {
@@ -55,7 +57,7 @@
         [self enterPressed];
     }
     NSString *operation = sender.currentTitle;
-    double result = [self.brain performOperation:operation];
+    double result = [self.brain performOperation:operation withTestValue:self.selectedTest];
     self.display.text = [NSString stringWithFormat:@"%g", result];
     self.history.text = [self.history.text stringByAppendingString:[operation stringByAppendingString:@" "]];
 }
@@ -70,8 +72,7 @@
 
 - (IBAction)testPressed:(UIButton *)sender 
 {
-    NSString *testName = sender.currentTitle;
-    [self.brain writeVariableValuesToDictionary:testName];
+    self.selectedTest = sender.currentTitle;
 }
 
 @end
