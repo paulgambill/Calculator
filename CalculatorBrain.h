@@ -10,7 +10,7 @@
 
 @interface CalculatorBrain : NSObject
 
-- (void)pushOperand:(double)operand;
+- (void)pushOperand:(id)operand;
 - (double)performOperation:(NSString *)operation withTestValue:(NSString *)selectedTest;
 - (void)emptyStack;
 

@@ -46,7 +46,7 @@
 
 - (IBAction)enterPressed 
 {
-    [self.brain pushOperand:[self.display.text doubleValue]];
+    [self.brain pushOperand:self.display.text];
     self.history.text = [self.history.text stringByAppendingString:[self.display.text stringByAppendingString:@" "]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
 }

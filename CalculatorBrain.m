@@ -34,21 +34,21 @@
     
     if ([testName isEqualToString:@"Test 1"]) {
         variableValues = [NSDictionary dictionaryWithObjectsAndKeys:
-                               [NSNumber numberWithInt:1], @"x",
-                               [NSNumber numberWithInt:2], @"y",
-                               [NSNumber numberWithInt:3], @"z", nil];
+                               [NSNumber numberWithDouble:1], @"x",
+                               [NSNumber numberWithDouble:2], @"y",
+                               [NSNumber numberWithDouble:3], @"z", nil];
     } 
     else if ([testName isEqualToString:@"Test 2"]) {
         variableValues = [NSDictionary dictionaryWithObjectsAndKeys:
-                               [NSNumber numberWithInt:4], @"x",
-                               [NSNumber numberWithInt:5], @"y",
-                               [NSNumber numberWithInt:6], @"z", nil];
+                               [NSNumber numberWithDouble:4], @"x",
+                               [NSNumber numberWithDouble:5], @"y",
+                               [NSNumber numberWithDouble:6], @"z", nil];
     } 
     else if ([testName isEqualToString:@"Test 3"]) {
         variableValues = [NSDictionary dictionaryWithObjectsAndKeys:
-                               [NSNumber numberWithInt:7], @"x",
-                               [NSNumber numberWithInt:8], @"y",
-                               [NSNumber numberWithInt:9], @"z", nil];
+                               [NSNumber numberWithDouble:7], @"x",
+                               [NSNumber numberWithDouble:8], @"y",
+                               [NSNumber numberWithDouble:9], @"z", nil];
     } else {
         variableValues = nil;
     }
@@ -70,9 +70,16 @@
 
 
 // adds operand to top of stack
-- (void)pushOperand:(double)operand 
-{
-    NSNumber *operandObject = [NSNumber numberWithDouble:operand];
+- (void)pushOperand:(id)operand 
+{   
+    id<NSObject> operandObject;
+    
+    if ([operand isEqualToString:@"x"] || [operand isEqualToString:@"y"] || [operand isEqualToString:@"z"]) {
+        operandObject = operand;
+    }
+    else {
+        operandObject = [NSNumber numberWithDouble:[operand doubleValue]];
+    }
     [self.programStack addObject:operandObject];
 }
 
