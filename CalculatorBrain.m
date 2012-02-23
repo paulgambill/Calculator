@@ -70,17 +70,15 @@
 
 
 // adds operand to top of stack
-- (void)pushOperand:(id)operand 
-{   
-    id<NSObject> operandObject;
-    
+- (void)pushOperand:(NSString *)operand 
+{       
     if ([operand isEqualToString:@"x"] || [operand isEqualToString:@"y"] || [operand isEqualToString:@"z"]) {
-        operandObject = operand;
+        [self.programStack addObject:operand];
     }
     else {
-        operandObject = [NSNumber numberWithDouble:[operand doubleValue]];
+        [self.programStack addObject:[NSNumber numberWithDouble:[operand doubleValue]]];
     }
-    [self.programStack addObject:operandObject];
+    
 }
 
 
