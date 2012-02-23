@@ -10,22 +10,12 @@
 
 @interface CalculatorBrain()
 @property (nonatomic, strong) NSMutableArray *programStack;
-//@property (nonatomic, strong) NSDictionary *variableValues;
 @end
 
 @implementation CalculatorBrain
 
 @synthesize programStack = _programStack;
-//@synthesize variableValues = _variableValues;
 
-// variableValues getter
-//- (NSDictionary *)variableValues
-//{
-//    if (!_variableValues) {
-//        _variableValues = [[NSDictionary alloc] init];
-//    }
-//    return _variableValues;
-//}
 
 // programStack getter
 - (NSMutableArray *)programStack
@@ -59,6 +49,8 @@
                                [NSNumber numberWithInt:7], @"x",
                                [NSNumber numberWithInt:8], @"y",
                                [NSNumber numberWithInt:9], @"z", nil];
+    } else {
+        variableValues = nil;
     }
     
     return variableValues;
@@ -87,7 +79,9 @@
 
 - (double)performOperation:(NSString *)operation withTestValue:(NSString *)selectedTest
 {
+    // get the variable values from the Test button written into dictionary
     NSDictionary *variableValues = [self writeVariableValuesToDictionary:selectedTest];
+    
     [self.programStack addObject:operation];
     return [[self class] runProgram:self.program usingVariableValues:variableValues];
 }
@@ -168,6 +162,19 @@
     if ([program isKindOfClass:[NSArray class]]) {
         stack = [program mutableCopy];
     }
+       
+    // enumerating through stack array and replacing variables with the key values from dictionary
+    if (variableValues) {
+        NSArray *keys = [variableValues allKeys];
+        for (int i = 0; i < stack.count; i++)
+        {
+            if ([keys containsObject:[stack objectAtIndex:i]])
+            {
+                [stack replaceObjectAtIndex:i withObject:[variableValues valueForKey:[stack objectAtIndex:i]]];
+            }
+        }
+    }
+    
     return [self popOperandOffProgramStack:stack];
 }
     
