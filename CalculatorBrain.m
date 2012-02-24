@@ -62,10 +62,59 @@
     return [self.programStack copy];
 }
 
+// passes in a string from stack and determines if it is an operator or not
++ (BOOL)isOperation:(NSString *)operation
+{
+    NSSet *operators = [NSSet setWithObjects:@"+", @"-", @"*", @"/", @"sin", @"cos", @"sqrt", @"π", nil];
+    
+    if ([operators containsObject:operation]) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
+// recursively go back through program stack to build infix notation
++ (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack
+{
+    NSString *description;
+    
+    id topOfStack = [stack lastObject];
+    if (topOfStack) [stack removeLastObject];
+    
+    // top of stack is a number so just return it
+    if ([topOfStack isKindOfClass:[NSNumber class]])
+    { 
+        description = [NSString stringWithFormat:@"%f", topOfStack];
+    }
+    
+    //we have an operator or variable
+    else if ([topOfStack isKindOfClass:[NSString class]])
+    { 
+        // topOfStack is an operator
+        if ([self isOperation:topOfStack]) {
+            
+        }
+        
+        // topOfStack is a variable
+        else {
+            
+        }
+        
+    }
+    
+    return description;
+}
 
 + (NSString *)descriptionOfProgram:(id)program
 {
-    return @"Implement this in Homework #2";
+    NSMutableArray *stack;
+    if ([program isKindOfClass:[NSArray class]]) {
+        stack = [program mutableCopy];
+    }
+    
+    return [self descriptionOfTopOfStack:stack];
 }
 
 
