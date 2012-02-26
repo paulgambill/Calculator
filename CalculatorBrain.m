@@ -78,7 +78,7 @@
 // recursively go back through program stack to build infix notation
 + (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack
 {
-    NSString *description;
+    NSString *description = [[NSString alloc] init];
     
     id topOfStack = [stack lastObject];
     if (topOfStack) [stack removeLastObject];
@@ -86,7 +86,7 @@
     // top of stack is a number so just return it
     if ([topOfStack isKindOfClass:[NSNumber class]])
     { 
-        description = [NSString stringWithFormat:@"%f", topOfStack];
+        description = [NSString stringWithFormat:@"%@", topOfStack];
     }
     
     //we have an operator or variable
@@ -95,6 +95,11 @@
         // topOfStack is an operator
         if ([self isOperation:topOfStack]) {
             
+            // placeholders to display operands in correct order
+            NSString *second = [self descriptionOfTopOfStack:stack];
+            NSString *first = [self descriptionOfTopOfStack:stack];
+            
+            description = [description stringByAppendingString:[first stringByAppendingString:[topOfStack stringByAppendingString:second]]];
         }
         
         // topOfStack is a variable

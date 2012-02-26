@@ -49,8 +49,8 @@
     [self.brain pushOperand:self.display.text];
     
     // fix this to call descriptionOfProgram
-    self.history.text = [self.history.text stringByAppendingString:[self.display.text stringByAppendingString:@" "]];
-    //self.history.text = [CalculatorBrain descriptionOfProgram:[CalculatorBrain program]];
+    //self.history.text = [self.history.text stringByAppendingString:[self.display.text stringByAppendingString:@" "]];
+    self.history.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
 }
 
@@ -64,8 +64,8 @@
     self.display.text = [NSString stringWithFormat:@"%g", result];
     
     // fix this to call descriptionOfProgram
-    self.history.text = [self.history.text stringByAppendingString:[operation stringByAppendingString:@" "]];
-    //self.history.text = [CalculatorBrain descriptionOfProgram:[CalculatorBrain program]];
+    //self.history.text = [self.history.text stringByAppendingString:[operation stringByAppendingString:@" "]];
+    self.history.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
 }
 
 - (IBAction)clearPressed:(UIButton *)sender 
