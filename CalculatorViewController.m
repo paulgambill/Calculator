@@ -48,8 +48,6 @@
 {
     [self.brain pushOperand:self.display.text];
     
-    // fix this to call descriptionOfProgram
-    //self.history.text = [self.history.text stringByAppendingString:[self.display.text stringByAppendingString:@" "]];
     self.history.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
 }
@@ -63,8 +61,6 @@
     double result = [self.brain performOperation:operation withTestValue:self.selectedTest];
     self.display.text = [NSString stringWithFormat:@"%g", result];
     
-    // fix this to call descriptionOfProgram
-    //self.history.text = [self.history.text stringByAppendingString:[operation stringByAppendingString:@" "]];
     self.history.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
 }
 
@@ -81,4 +77,16 @@
     self.selectedTest = sender.currentTitle;
 }
 
+- (IBAction)undoPressed:(UIButton *)sender 
+{
+    if ([self.display.text length] > 0)
+    {
+        self.display.text = [self.display.text substringToIndex:[self.display.text length] -1];
+        if ([self.display.text length] == 0)
+        {
+            self.display.text = @"0";
+            self.userIsInTheMiddleOfEnteringANumber = NO;
+        }
+    }
+}
 @end
