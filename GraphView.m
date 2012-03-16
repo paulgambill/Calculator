@@ -7,6 +7,7 @@
 //
 
 #import "GraphView.h"
+#import "AxesDrawer.h"
 
 @implementation GraphView
 //@synthesize contentMode = _contentMode;
@@ -34,7 +35,18 @@
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
+    UIGraphicsPushContext(context);
     
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    CGPoint origin;
+    origin.x = 0;
+    origin.y = 0;
+    CGFloat scale = 1.0;
+    
+    
+    [AxesDrawer drawAxesInRect:bounds originAtPoint:origin scale:scale];
+    
+    UIGraphicsPopContext();
 }
 
 @end
