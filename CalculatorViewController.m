@@ -29,6 +29,11 @@
     return _brain;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+   // [segue.destinationViewController some sort of drawing method goes here ];
+}
+
 - (IBAction)digitPressed:(UIButton *)sender 
 {
     NSString *digit = [sender currentTitle];
