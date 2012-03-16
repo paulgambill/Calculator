@@ -10,4 +10,7 @@
 
 @interface GraphView : UIView
 
+//uncomment if rotation allowed
+//@property (nonatomic) UIViewContentMode contentMode;
+
 @end

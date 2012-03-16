@@ -9,23 +9,32 @@
 #import "GraphView.h"
 
 @implementation GraphView
+//@synthesize contentMode = _contentMode;
+
+- (void)setup
+{
+    
+}
+
+- (void)awakeFromNib
+{
+    [self setup];
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self setup];
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
 }
-*/
 
 @end
