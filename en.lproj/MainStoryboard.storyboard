@@ -385,9 +385,6 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="waz-mH-tmK" kind="push" id="Hbd-Jt-XBF"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -396,32 +393,26 @@
                     <connections>
                         <outlet property="display" destination="CrY-nB-E5F" id="nbX-re-DKq"/>
                         <outlet property="history" destination="yrZ-QL-E7y" id="Wdu-bs-Jex"/>
+                        <segue destination="waz-mH-tmK" kind="push" id="AGB-lN-e3O"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="634" y="115"/>
         </scene>
-        <!--Graph View Controller-->
+        <!--View Controller-->
         <scene sceneID="vUQ-JK-0xI">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jK4-gR-X3s" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="waz-mH-tmK" customClass="GraphViewController" sceneMemberID="viewController">
+                <viewController id="waz-mH-tmK" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CUW-dr-KSn">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" id="eJ6-7b-fPL">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="lYI-9P-k2q"/>
+                    <navigationItem key="navigationItem" id="MDh-WN-nuc"/>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1070" y="115"/>
+            <point key="canvasLocation" x="1038" y="115"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qLZ-7j-BY4">
@@ -449,9 +440,6 @@
                 <relationship kind="outlet" name="display" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="history" candidateClass="UILabel"/>
             </relationships>
-        </class>
-        <class className="GraphViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphViewController.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
