@@ -32,9 +32,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [segue.destinationViewController setNeedsDisplay];
-    
-    //some sort of drawing method goes here watch how setHappiness calls drawRect in Happiness];
+    UIViewController *graphController = segue.destinationViewController;
+   // [[segue.destinationViewController graphView] setNeedsDisplay];
 }
 
 - (IBAction)digitPressed:(UIButton *)sender 

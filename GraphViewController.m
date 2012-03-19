@@ -7,14 +7,20 @@
 //
 
 #import "GraphViewController.h"
-#import "GraphView.h"
 
 @interface GraphViewController ()
+
 
 @end
 
 @implementation GraphViewController
-@synthesize program;
+@synthesize program = _program;
+@synthesize graphView = _graphView;
+
+- (void)drawGraph
+{
+    [self.graphView setNeedsDisplay];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

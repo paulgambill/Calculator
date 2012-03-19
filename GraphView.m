@@ -10,7 +10,7 @@
 #import "AxesDrawer.h"
 
 @implementation GraphView
-//@synthesize contentMode = _contentMode;
+@synthesize contentMode = _contentMode;
 
 - (void)setup
 {
@@ -38,10 +38,15 @@
     UIGraphicsPushContext(context);
     
     CGRect bounds = [[UIScreen mainScreen] bounds];
+   
+    CGPoint midpoint; //center of screen
+    midpoint.x = self.bounds.origin.x + self.bounds.size.width/2;
+    midpoint.y = self.bounds.origin.y + self.bounds.size.height/2;
+    
     CGPoint origin;
-    origin.x = 0;
-    origin.y = 0;
-    CGFloat scale = 1.0;
+    origin.x = midpoint.x;
+    origin.y = midpoint.y;
+    CGFloat scale = 5.0;
     
     
     //draws axes on the graph view
