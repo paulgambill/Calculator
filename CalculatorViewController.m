@@ -8,6 +8,7 @@
 
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
+#import "GraphViewController.h"
 
 @interface CalculatorViewController()
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
@@ -31,7 +32,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-   // [segue.destinationViewController some sort of drawing method goes here ];
+    [segue.destinationViewController setNeedsDisplay];
+    
+    //some sort of drawing method goes here watch how setHappiness calls drawRect in Happiness];
 }
 
 - (IBAction)digitPressed:(UIButton *)sender 

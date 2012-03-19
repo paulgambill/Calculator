@@ -14,7 +14,7 @@
 
 - (void)setup
 {
-    
+    self.contentMode = UIViewContentModeRedraw;
 }
 
 - (void)awakeFromNib
@@ -44,6 +44,7 @@
     CGFloat scale = 1.0;
     
     
+    //draws axes on the graph view
     [AxesDrawer drawAxesInRect:bounds originAtPoint:origin scale:scale];
     
     UIGraphicsPopContext();
