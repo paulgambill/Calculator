@@ -11,6 +11,34 @@
 
 @implementation GraphView
 @synthesize contentMode = _contentMode;
+@synthesize scale = _scale;
+
+#define DEFAULT_SCALE 1.0
+
+- (CGFloat)scale
+{
+    if (!_scale) {
+        return DEFAULT_SCALE; //not allowing a scale of 0 here
+    } else {
+        return _scale;
+    }
+}
+
+- (void)setScale:(CGFloat)scale
+{
+    if (scale != _scale) {
+        _scale = scale;
+        [self setNeedsDisplay]; //redraw whenever the scale changes
+    }
+}
+
+- (void)pinch:(UIPinchGestureRecognizer *)gesture
+{
+    if ((gesture.state == UIGestureRecognizerStateChanged) || (gesture.state == UIGestureRecognizerStateEnded)) {
+        self.scale *= gesture.scale; //adjusts the scale
+        gesture.scale = 1; //resets the scale to 1 so that future scale changes happen from that point, not the original
+    }
+}
 
 - (void)setup
 {
@@ -46,11 +74,11 @@
     CGPoint origin;
     origin.x = midpoint.x;
     origin.y = midpoint.y;
-    CGFloat scale = 5.0;
+    //CGFloat scale = 5.0;
     
     
     //draws axes on the graph view
-    [AxesDrawer drawAxesInRect:bounds originAtPoint:origin scale:scale];
+    [AxesDrawer drawAxesInRect:bounds originAtPoint:origin scale:self.scale];
     
     UIGraphicsPopContext();
 }

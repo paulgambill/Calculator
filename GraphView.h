@@ -10,7 +10,9 @@
 
 @interface GraphView : UIView
 
-//uncomment if rotation allowed
 @property (nonatomic) UIViewContentMode contentMode;
+@property (nonatomic) CGFloat scale;
+
+- (void)pinch:(UIPinchGestureRecognizer *)gesture;
 
 @end
