@@ -32,8 +32,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    UIViewController *graphController = segue.destinationViewController;
-   // [[segue.destinationViewController graphView] setNeedsDisplay];
+    [segue.destinationViewController setProgram:self.brain.program];
 }
 
 - (IBAction)digitPressed:(UIButton *)sender 

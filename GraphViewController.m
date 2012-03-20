@@ -17,6 +17,23 @@
 @synthesize program = _program;
 @synthesize graphView = _graphView;
 
+
+
+- (void)setProgram:(id)program
+{
+    _program = program;
+    [self.graphView setNeedsDisplay];
+}
+
+- (void)setGraphView:(GraphView *)graphView
+{
+    _graphView = graphView;
+    
+    //enable pinch
+    [self.graphView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pinch:)]];
+    
+}
+
 - (void)drawGraph
 {
     [self.graphView setNeedsDisplay];
