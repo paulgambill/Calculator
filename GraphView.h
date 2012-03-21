@@ -16,6 +16,7 @@
 
 @property (nonatomic) UIViewContentMode contentMode;
 @property (nonatomic) CGFloat scale;
+@property (nonatomic) CGPoint graphOrigin;
 
 - (void)pinch:(UIPinchGestureRecognizer *)gesture;
 

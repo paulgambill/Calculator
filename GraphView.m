@@ -12,6 +12,7 @@
 @implementation GraphView
 @synthesize contentMode = _contentMode;
 @synthesize scale = _scale;
+@synthesize graphOrigin = _graphOrigin;
 @synthesize dataSource = _dataSource;
 
 #define DEFAULT_SCALE 1.0
@@ -33,11 +34,29 @@
     }
 }
 
+- (void)setGraphOrigin:(CGPoint)graphOrigin
+{
+    _graphOrigin = graphOrigin;
+    [self setNeedsDisplay]; //redraw when the user has panned to a different graphOrigin
+}
+
+//handle pinching to adjust scale
 - (void)pinch:(UIPinchGestureRecognizer *)gesture
 {
-    if ((gesture.state == UIGestureRecognizerStateChanged) || (gesture.state == UIGestureRecognizerStateEnded)) {
+    if ((gesture.state == UIGestureRecognizerStateChanged) || (gesture.state == UIGestureRecognizerStateEnded)) 
+    {
         self.scale *= gesture.scale; //adjusts the scale
         gesture.scale = 1; //resets the scale to 1 so that future scale changes happen from that point, not the original
+    }
+}
+
+//handle panning to adjust the graphOrigin
+- (void)pan:(UIPanGestureRecognizer *)gesture
+{
+    if ((gesture.state == UIGestureRecognizerStateChanged) || (gesture.state == UIGestureRecognizerStateEnded))
+    {
+        CGPoint translation = [gesture translationInView:self];
+        self.graphOrigin = translation;
     }
 }
 
@@ -66,7 +85,8 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     UIGraphicsPushContext(context);
     
-    CGRect bounds = [[UIScreen mainScreen] bounds];
+    //draws axes on the graph view
+    [AxesDrawer drawAxesInRect:[[UIScreen mainScreen] bounds] originAtPoint:[self graphOrigin] scale:[self scale]];
    
     CGPoint midpoint; //center of screen
     midpoint.x = self.bounds.origin.x + self.bounds.size.width/2;
@@ -75,7 +95,6 @@
     CGPoint origin;
     origin.x = midpoint.x;
     origin.y = midpoint.y;
-    //CGFloat scale = 5.0;
     
     // point for drawing. might need another for drawToThisPoint
     CGPoint drawingPoint;
@@ -86,12 +105,12 @@
         for (double point=0; point<self.bounds.size.width; point++) {
             drawingPoint.y = [[self dataSource] yValueForXValue:point];
             drawingPoint.x = point;
-        }
+            
+            
+            //convert x coordinate to xValue. get corresponding yValue. convert to y coordinate. that is point 1. repeat for point 2. draw from point 1 to point 2. wash, rinse, repeat.
+         }
 
     }
-    
-    //draws axes on the graph view
-    [AxesDrawer drawAxesInRect:bounds originAtPoint:origin scale:self.scale];
     
     UIGraphicsPopContext();
 }
