@@ -8,7 +8,7 @@
 
 #import "GraphViewController.h"
 
-@interface GraphViewController ()
+@interface GraphViewController () <GraphViewDataSource>
 
 @end
 
@@ -17,12 +17,6 @@
 @synthesize graphView = _graphView;
 
 
-- (void)setProgram:(id)program
-{
-    _program = program;
-    [self.graphView setNeedsDisplay];
-}
-
 - (void)setGraphView:(GraphView *)graphView
 {
     _graphView = graphView;
@@ -30,13 +24,33 @@
     //enable pinch
     [self.graphView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pinch:)]];
     
+    self.graphView.dataSource = self;
 }
 
-- (void)drawGraph
+
+- (void)setProgram:(id)program
 {
+    _program = program;
     [self.graphView setNeedsDisplay];
 }
 
+- (id)program
+{
+    if (!_program)
+    {
+        _program = [[GraphViewController alloc] init];
+    }
+    return self.program;
+}
+
+- (float)yValueForXValue:(float)xValue
+{
+    float yValue;
+    
+    
+    
+    return yValue;
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

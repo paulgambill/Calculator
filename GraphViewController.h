@@ -14,5 +14,6 @@
 @property (nonatomic, weak) IBOutlet GraphView *graphView;
 
 - (void)setProgram:(id)program;
+- (id)program;
 
 @end

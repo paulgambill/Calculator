@@ -12,6 +12,7 @@
 @implementation GraphView
 @synthesize contentMode = _contentMode;
 @synthesize scale = _scale;
+@synthesize dataSource = _dataSource;
 
 #define DEFAULT_SCALE 1.0
 
@@ -76,6 +77,15 @@
     origin.y = midpoint.y;
     //CGFloat scale = 5.0;
     
+    // point for drawing. might need another for drawToThisPoint
+    CGPoint drawingPoint;
+    
+    
+    //stubbed out if checking if the delegated method has been implemented and then do stuff inside it
+    if ([[self dataSource] respondsToSelector:@selector(yValueForXValue:)])
+    {
+        drawingPoint.y = [[self dataSource] yValueForXValue:1];
+    }
     
     //draws axes on the graph view
     [AxesDrawer drawAxesInRect:bounds originAtPoint:origin scale:self.scale];
