@@ -9,11 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "GraphView.h"
 
-@interface GraphViewController : UIViewController
+@interface GraphViewController : UIViewController <GraphViewDelegate>
 @property (nonatomic, readonly) id program;
 @property (nonatomic, weak) IBOutlet GraphView *graphView;
 
 - (void)setProgram:(id)program;
-- (id)program;
 
 @end

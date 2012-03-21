@@ -7,8 +7,9 @@
 //
 
 #import "GraphViewController.h"
+#import "CalculatorBrain.h"
 
-@interface GraphViewController () <GraphViewDataSource>
+@interface GraphViewController () <GraphViewDelegate>
 
 @end
 
@@ -31,6 +32,7 @@
 - (void)setProgram:(id)program
 {
     _program = program;
+    //redraw here, because we have a new program and therefore a new graph
     [self.graphView setNeedsDisplay];
 }
 
@@ -40,14 +42,20 @@
     {
         _program = [[GraphViewController alloc] init];
     }
-    return self.program;
+    return _program;
 }
 
-- (float)yValueForXValue:(float)xValue
+- (double)yValueForXValue:(double)xValue
 {
-    float yValue;
+    double yValue;
     
+    NSDictionary *xValueDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [NSNumber numberWithDouble:xValue], @"x", nil];
     
+    if(_program)
+    {
+       yValue = [CalculatorBrain runProgram:self.program usingVariableValues:xValueDictionary];
+    }
     
     return yValue;
 }

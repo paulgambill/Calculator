@@ -80,11 +80,14 @@
     // point for drawing. might need another for drawToThisPoint
     CGPoint drawingPoint;
     
-    
     //stubbed out if checking if the delegated method has been implemented and then do stuff inside it
     if ([[self dataSource] respondsToSelector:@selector(yValueForXValue:)])
     {
-        drawingPoint.y = [[self dataSource] yValueForXValue:1];
+        for (double point=0; point<self.bounds.size.width; point++) {
+            drawingPoint.y = [[self dataSource] yValueForXValue:point];
+            drawingPoint.x = point;
+        }
+
     }
     
     //draws axes on the graph view

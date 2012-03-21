@@ -8,10 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol GraphViewDataSource <NSObject>
-
-- (float)yValueForXValue:(float)xValue;
-
+@protocol GraphViewDelegate <NSObject>
+- (double)yValueForXValue:(double)xValue;
 @end
 
 @interface GraphView : UIView
@@ -21,6 +19,6 @@
 
 - (void)pinch:(UIPinchGestureRecognizer *)gesture;
 
-@property (nonatomic, strong) id <GraphViewDataSource> dataSource;
+@property (nonatomic, weak) id <GraphViewDelegate> dataSource;
 
 @end
