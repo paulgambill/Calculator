@@ -22,6 +22,8 @@
     if (!_scale) {
         return DEFAULT_SCALE; //not allowing a scale of 0 here
     } else {
+        //else return the saved scale
+        //return [[[NSUserDefaults standardUserDefaults] objectForKey:@"scale"] floatValue];
         return _scale;
     }
 }
@@ -68,6 +70,13 @@
     {
         self.scale *= gesture.scale; //adjusts the scale
         gesture.scale = 1; //resets the scale to 1 so that future scale changes happen from that point, not the original
+        
+        if (gesture.state == UIGestureRecognizerStateEnded)
+        {
+            //save scale
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:self.scale] forKey:@"scale"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
     }
 }
 
@@ -87,11 +96,31 @@
     
 //    NSString *pointForLog = NSStringFromCGPoint(translation);
 //    NSString *pointGraphOrigin = NSStringFromCGPoint(self.graphOrigin);
-    NSLog(NSStringFromCGPoint(translation));
-    NSLog(NSStringFromCGPoint(self.graphOrigin));
+//    NSLog(NSStringFromCGPoint(translation));
+//    NSLog(NSStringFromCGPoint(self.graphOrigin));
     
-    if (UIGestureRecognizerStateEnded)
+    //save location of origin
+    if (gesture.state == UIGestureRecognizerStateEnded)
     {
+        //place origin into a string and then save as user default
+        NSString *originPoint = NSStringFromCGPoint(self.graphOrigin);
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:originPoint forKey:@"origin"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+//triple tap to center the origin at tap
+- (void)tripleTap:(UITapGestureRecognizer *)gesture
+{
+    gesture.numberOfTapsRequired = 3;
+    
+    if (gesture.state == UIGestureRecognizerStateEnded)
+    {
+        //move origin to location of triple tap
+        self.graphOrigin = [gesture locationInView:self];
+    
+        //save location of origin
         //place origin into a string and then save as user default
         NSString *originPoint = NSStringFromCGPoint(self.graphOrigin);
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
