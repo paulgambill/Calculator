@@ -34,6 +34,7 @@
 - (void)setProgram:(id)program
 {
     _program = program;
+    
     //redraw here, because we have a new program and therefore a new graph
     [self.graphView setNeedsDisplay];
 }

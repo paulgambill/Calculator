@@ -34,6 +34,27 @@
     }
 }
 
+- (CGPoint)graphOrigin
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    CGPoint origin = CGPointFromString([defaults objectForKey:@"origin"]);
+    
+    if (CGPointEqualToPoint(_graphOrigin, CGPointZero))
+    {
+        if(!defaults)
+        {
+            //if the origin is set at (0,0) top left of screen, change it to center of visible view
+            _graphOrigin = CGPointMake(self.bounds.origin.x + self.bounds.size.width / 2, self.bounds.origin.y + self.bounds.size.height / 2);
+        }
+        else
+        {
+            _graphOrigin = origin;
+        }
+    } 
+    
+    return _graphOrigin;
+}
+
 - (void)setGraphOrigin:(CGPoint)graphOrigin
 {
     _graphOrigin = graphOrigin;
@@ -53,10 +74,29 @@
 //handle panning to adjust the graphOrigin
 - (void)pan:(UIPanGestureRecognizer *)gesture
 {
-    if ((gesture.state == UIGestureRecognizerStateChanged) || (gesture.state == UIGestureRecognizerStateEnded))
+    CGPoint translation  = [gesture translationInView:self];
+    CGPoint relativeTranslation;
+    
+    //get the translation relative to the graph origin
+    relativeTranslation.x = self.graphOrigin.x + translation.x;
+    relativeTranslation.y = self.graphOrigin.y + translation.y;
+    self.graphOrigin = relativeTranslation;
+    
+    //reset the translation to 0 so it is not cumulative
+    [gesture setTranslation:CGPointZero inView:self];
+    
+//    NSString *pointForLog = NSStringFromCGPoint(translation);
+//    NSString *pointGraphOrigin = NSStringFromCGPoint(self.graphOrigin);
+    NSLog(NSStringFromCGPoint(translation));
+    NSLog(NSStringFromCGPoint(self.graphOrigin));
+    
+    if (UIGestureRecognizerStateEnded)
     {
-        CGPoint translation = [gesture translationInView:self];
-        self.graphOrigin = translation;
+        //place origin into a string and then save as user default
+        NSString *originPoint = NSStringFromCGPoint(self.graphOrigin);
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:originPoint forKey:@"origin"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
@@ -87,14 +127,6 @@
     
     //draws axes on the graph view
     [AxesDrawer drawAxesInRect:[[UIScreen mainScreen] bounds] originAtPoint:[self graphOrigin] scale:[self scale]];
-   
-    CGPoint midpoint; //center of screen
-    midpoint.x = self.bounds.origin.x + self.bounds.size.width/2;
-    midpoint.y = self.bounds.origin.y + self.bounds.size.height/2;
-    
-    CGPoint origin;
-    origin.x = midpoint.x;
-    origin.y = midpoint.y;
     
     // point for drawing. might need another for drawToThisPoint
     CGPoint drawingPoint;
