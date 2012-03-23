@@ -15,17 +15,22 @@
 @synthesize graphOrigin = _graphOrigin;
 @synthesize dataSource = _dataSource;
 
+
 #define DEFAULT_SCALE 1.0
 
 - (CGFloat)scale
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
+    
     if (!_scale) {
-        return DEFAULT_SCALE; //not allowing a scale of 0 here
-    } else {
-        //else return the saved scale
-        //return [[[NSUserDefaults standardUserDefaults] objectForKey:@"scale"] floatValue];
-        return _scale;
+        _scale = DEFAULT_SCALE; //not allowing a scale of 0 here
     }
+//    } else {
+//        //else return the saved scale
+//        _scale = scale; //[[defaults objectForKey:@"scale"] floatValue];
+//    }
+    
+    return _scale;
 }
 
 - (void)setScale:(CGFloat)scale
@@ -37,20 +42,17 @@
 }
 
 - (CGPoint)graphOrigin
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    CGPoint origin = CGPointFromString([defaults objectForKey:@"origin"]);
-    
+{    
     if (CGPointEqualToPoint(_graphOrigin, CGPointZero))
     {
-        if(!defaults)
+        if(![[NSUserDefaults standardUserDefaults] objectForKey:@"origin"])
         {
             //if the origin is set at (0,0) top left of screen, change it to center of visible view
             _graphOrigin = CGPointMake(self.bounds.origin.x + self.bounds.size.width / 2, self.bounds.origin.y + self.bounds.size.height / 2);
         }
         else
         {
-            _graphOrigin = origin;
+            _graphOrigin = CGPointFromString([[NSUserDefaults standardUserDefaults] objectForKey:@"origin"]);
         }
     } 
     
