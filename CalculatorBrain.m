@@ -128,7 +128,7 @@
 // adds operand to top of stack
 - (void)pushOperand:(NSString *)operand 
 {       
-    if ([operand isEqualToString:@"x"] || [operand isEqualToString:@"y"] || [operand isEqualToString:@"z"]) {
+    if ([operand isEqualToString:@"x"]) {
         [self.programStack addObject:operand];
     }
     else {
