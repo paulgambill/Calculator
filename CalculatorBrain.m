@@ -76,10 +76,8 @@
 }
 
 + (BOOL)isVariable:(NSString *)variable
-{
-    NSSet *variables = [NSSet setWithObjects:@"x", @"y", @"z", nil];
-    
-    if ([variables containsObject:variable]) {
+{    
+    if (!([variable rangeOfString:@"x"].location == NSNotFound)) {
         return YES;
     }
     else {
@@ -128,7 +126,7 @@
 // adds operand to top of stack
 - (void)pushOperand:(NSString *)operand 
 {       
-    if ([operand isEqualToString:@"x"]) {
+    if (!([operand rangeOfString:@"x"].location == NSNotFound)) {
         [self.programStack addObject:operand];
     }
     else {
