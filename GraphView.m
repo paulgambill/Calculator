@@ -20,15 +20,15 @@
 
 - (CGFloat)scale
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
-    
-    if (!_scale) {
-        _scale = DEFAULT_SCALE; //not allowing a scale of 0 here
-    }
-//    } else {
+    //if there is not a scale saved in user defaults
+//    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"scale"]) {
+    if(!_scale){
+        //set the scale to a defined scale that is not 0
+        _scale = DEFAULT_SCALE;
+//    } else if(_scale != DEFAULT_SCALE) {
 //        //else return the saved scale
-//        _scale = scale; //[[defaults objectForKey:@"scale"] floatValue];
-//    }
+//        _scale = [[[NSUserDefaults standardUserDefaults] objectForKey:@"scale"] floatValue];
+    }
     
     return _scale;
 }
@@ -45,13 +45,15 @@
 {    
     if (CGPointEqualToPoint(_graphOrigin, CGPointZero))
     {
+        //if origin has not been saved before into user defaults
         if(![[NSUserDefaults standardUserDefaults] objectForKey:@"origin"])
         {
-            //if the origin is set at (0,0) top left of screen, change it to center of visible view
+            //if the origin is set at (0,0) top left of screen and there is no saved origin, change it to center of visible view
             _graphOrigin = CGPointMake(self.bounds.origin.x + self.bounds.size.width / 2, self.bounds.origin.y + self.bounds.size.height / 2);
         }
         else
-        {
+        {   
+            //else return the saved origin point
             _graphOrigin = CGPointFromString([[NSUserDefaults standardUserDefaults] objectForKey:@"origin"]);
         }
     } 
@@ -95,11 +97,6 @@
     
     //reset the translation to 0 so it is not cumulative
     [gesture setTranslation:CGPointZero inView:self];
-    
-//    NSString *pointForLog = NSStringFromCGPoint(translation);
-//    NSString *pointGraphOrigin = NSStringFromCGPoint(self.graphOrigin);
-//    NSLog(NSStringFromCGPoint(translation));
-//    NSLog(NSStringFromCGPoint(self.graphOrigin));
     
     //save location of origin
     if (gesture.state == UIGestureRecognizerStateEnded)
