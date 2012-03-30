@@ -160,26 +160,29 @@
     CGPoint drawingPoint;
     
     //stubbed out if checking if the delegated method has been implemented and then do stuff inside it
-    if ([[self dataSource] respondsToSelector:@selector(yValueForXValue:)])
+    if ([self.dataSource respondsToSelector:@selector(yValueForXValue:)])
     {
         [[UIColor blackColor] setStroke];
         CGContextMoveToPoint(context, CGPointZero.x, CGPointZero.y);
         double xValue;
+        double yValue;
         
         for (double point=0; point<self.bounds.size.width; point++) {
-            xValue = point/[self scale] - self.graphOrigin.x;                                                                                              
             
-            drawingPoint.y = [[self dataSource] yValueForXValue:xValue];
+            //convert the horizontal point to an x Value based on the graph scale and origin
+            xValue = point/[self scale] - self.graphOrigin.x;
+            
+            //using the x Value, get the y Value and convert to a graph point
+            yValue = [self.dataSource yValueForXValue:xValue];            
+            
+            drawingPoint.y = yValue/[self scale] - self.graphOrigin.y;
             drawingPoint.x = point;
             
             CGContextAddLineToPoint(context, drawingPoint.x, drawingPoint.y);
-            
-            
-            //convert x coordinate to xValue. get corresponding yValue. convert to y coordinate. that is point 1. repeat for point 2. draw from point 1 to point 2. wash, rinse, repeat.
          }
         
         CGContextStrokePath(context);
-
+        NSStringFrom
     }
     
     UIGraphicsPopContext();

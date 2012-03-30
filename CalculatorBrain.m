@@ -75,14 +75,17 @@
     }
 }
 
-+ (BOOL)isVariable:(NSString *)variable
++ (BOOL)isVariable:(id)variable
 {    
-    if (!([variable rangeOfString:@"x"].location == NSNotFound)) {
-        return YES;
+    
+    if([(NSString *)variable respondsToSelector:@selector(rangeOfString:)])
+    {
+        if (!([variable rangeOfString:@"x"].location == NSNotFound)) {
+            return YES;
+        }
     }
-    else {
-        return NO;
-    }
+    
+    return NO;
 }
 
 // recursively go back through program stack to build infix notation
@@ -224,11 +227,11 @@
        
     // enumerating through stack array and replacing variables with the key values from dictionary
     if (variableValues) {
-        NSArray *keys = [variableValues allKeys];
         for (int i = 0; i < stack.count; i++)
         {
-            if ([keys containsObject:[stack objectAtIndex:i]])
+            if ([CalculatorBrain isVariable:[stack objectAtIndex:i]])
             {
+                //this needs to be fixed 
                 [stack replaceObjectAtIndex:i withObject:[variableValues valueForKey:[stack objectAtIndex:i]]];
             }
         }

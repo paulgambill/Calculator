@@ -56,7 +56,8 @@
     double yValue;
     
     NSDictionary *xValueDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSNumber numberWithDouble:xValue], @"x", nil];
+                                                            [NSNumber numberWithDouble:xValue], 
+                                                            @"x", nil];
     
     if(_program)
     {
