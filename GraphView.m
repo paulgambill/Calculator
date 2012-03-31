@@ -175,14 +175,19 @@
             //using the x Value, get the y Value and convert to a graph point
             yValue = [self.dataSource yValueForXValue:xValue];            
             
-            drawingPoint.y = yValue/[self scale] - self.graphOrigin.y;
+            drawingPoint.y = yValue/[self scale] + self.graphOrigin.y;
             drawingPoint.x = point;
+            
+           
+            NSLog(@"xValue: %f", xValue);
+            NSLog(@"yValue: %f", yValue);
+            NSLog(@"drawingPoint: %@", NSStringFromCGPoint(drawingPoint));
+            
             
             CGContextAddLineToPoint(context, drawingPoint.x, drawingPoint.y);
          }
         
         CGContextStrokePath(context);
-        NSStringFrom
     }
     
     UIGraphicsPopContext();
