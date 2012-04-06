@@ -156,7 +156,7 @@
     //draws axes on the graph view
     [AxesDrawer drawAxesInRect:[[UIScreen mainScreen] bounds] originAtPoint:[self graphOrigin] scale:[self scale]];
     
-    // point for drawing. might need another for drawToThisPoint
+    // point for drawing
     CGPoint drawingPoint;
     
     //stubbed out if checking if the delegated method has been implemented and then do stuff inside it
@@ -170,18 +170,20 @@
         for (double point=0; point<self.bounds.size.width; point++) {
             
             //convert the horizontal point to an x Value based on the graph scale and origin
-            xValue = point/[self scale] - self.graphOrigin.x;
+            xValue = (point - self.graphOrigin.x); ///[self scale];
             
             //using the x Value, get the y Value and convert to a graph point
             yValue = [self.dataSource yValueForXValue:xValue];            
             
-            drawingPoint.y = yValue/[self scale] + self.graphOrigin.y;
+            drawingPoint.y = (-yValue + self.graphOrigin.y); //[self scale];
             drawingPoint.x = point;
             
-           
+            /*
+            NSLog(@"scale: %@", self.scale);
             NSLog(@"xValue: %f", xValue);
             NSLog(@"yValue: %f", yValue);
             NSLog(@"drawingPoint: %@", NSStringFromCGPoint(drawingPoint));
+            */
             
             
             CGContextAddLineToPoint(context, drawingPoint.x, drawingPoint.y);
@@ -191,6 +193,8 @@
     }
     
     UIGraphicsPopContext();
+    
+    //NSLog(@"DONE ***************************************************");
 }
 
 @end
