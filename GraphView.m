@@ -20,16 +20,6 @@
 
 - (CGFloat)scale
 {
-    //if there is not a scale saved in user defaults
-    /*if (![[NSUserDefaults standardUserDefaults] objectForKey:@"scale"]) {
-        if(!_scale){
-            //set the scale to a defined scale that is not 0
-            _scale = DEFAULT_SCALE;
-        }
-     
-    if(!_scale)
-    
-    }  else*/ 
     if (_scale != DEFAULT_SCALE) {
         
         // if there is a saved scale, use it. otherwise set the default_scale
@@ -176,16 +166,17 @@
         CGContextMoveToPoint(context, CGPointZero.x, CGPointZero.y);
         double xValue;
         double yValue;
+        double increment = 1/self.contentScaleFactor;
         
-        for (double point=0; point<self.bounds.size.width; point++) {
+        for (double point=self.bounds.origin.x; point<self.bounds.size.width; point+=increment) {
             
             //convert the horizontal point to an x Value based on the graph scale and origin
-            xValue = (point - self.graphOrigin.x) / self.scale; ///[self scale];
+            xValue = (point - self.graphOrigin.x) / self.scale;
             
             //using the x Value, get the y Value and convert to a graph point
             yValue = [self.dataSource yValueForXValue:xValue];
             
-            drawingPoint.y = (-yValue * self.scale) + self.graphOrigin.y; //[self scale];
+            drawingPoint.y = (-yValue * self.scale) + self.graphOrigin.y;
             drawingPoint.x = point;
             
             
