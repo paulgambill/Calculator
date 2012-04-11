@@ -21,13 +21,26 @@
 - (CGFloat)scale
 {
     //if there is not a scale saved in user defaults
-//    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"scale"]) {
-    if(!_scale){
-        //set the scale to a defined scale that is not 0
-        _scale = DEFAULT_SCALE;
-//    } else if(_scale != DEFAULT_SCALE) {
-//        //else return the saved scale
-//        _scale = [[[NSUserDefaults standardUserDefaults] objectForKey:@"scale"] floatValue];
+    /*if (![[NSUserDefaults standardUserDefaults] objectForKey:@"scale"]) {
+        if(!_scale){
+            //set the scale to a defined scale that is not 0
+            _scale = DEFAULT_SCALE;
+        }
+     
+    if(!_scale)
+    
+    }  else*/ 
+    if (_scale != DEFAULT_SCALE) {
+        
+        // if there is a saved scale, use it. otherwise set the default_scale
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"scale"])
+        {
+            _scale = [[[NSUserDefaults standardUserDefaults] objectForKey:@"scale"] floatValue];
+        }
+        else {
+            _scale = DEFAULT_SCALE;
+        }
+        
     }
     
     return _scale;
@@ -38,6 +51,10 @@
     if (scale != _scale) {
         _scale = scale;
         [self setNeedsDisplay]; //redraw whenever the scale changes
+        
+        //save scale
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:_scale] forKey:@"scale"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
@@ -74,13 +91,6 @@
     {
         self.scale *= gesture.scale; //adjusts the scale
         gesture.scale = 1; //resets the scale to 1 so that future scale changes happen from that point, not the original
-        
-        if (gesture.state == UIGestureRecognizerStateEnded)
-        {
-            //save scale
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:self.scale] forKey:@"scale"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
     }
 }
 
@@ -118,7 +128,7 @@
     {
         //move origin to location of triple tap
         self.graphOrigin = [gesture locationInView:self];
-    
+        
         //save location of origin
         //place origin into a string and then save as user default
         NSString *originPoint = NSStringFromCGPoint(self.graphOrigin);
@@ -170,31 +180,36 @@
         for (double point=0; point<self.bounds.size.width; point++) {
             
             //convert the horizontal point to an x Value based on the graph scale and origin
-            xValue = (point - self.graphOrigin.x); ///[self scale];
+            xValue = (point - self.graphOrigin.x) / self.scale; ///[self scale];
             
             //using the x Value, get the y Value and convert to a graph point
-            yValue = [self.dataSource yValueForXValue:xValue];            
+            yValue = [self.dataSource yValueForXValue:xValue];
             
-            drawingPoint.y = (-yValue + self.graphOrigin.y); //[self scale];
+            drawingPoint.y = (-yValue * self.scale) + self.graphOrigin.y; //[self scale];
             drawingPoint.x = point;
             
-            /*
-            NSLog(@"scale: %@", self.scale);
-            NSLog(@"xValue: %f", xValue);
-            NSLog(@"yValue: %f", yValue);
-            NSLog(@"drawingPoint: %@", NSStringFromCGPoint(drawingPoint));
-            */
+            
+            // logging drawing values. Set shouldLog to YES to print out data
+            BOOL shouldLog = NO;
+            if (drawingPoint.y < 0 || drawingPoint.x < 0 || drawingPoint.y > 480 || drawingPoint.x > 320) {
+                shouldLog = NO;
+            }
+            if ((int)point % 10 == 0 && shouldLog) {
+                NSLog(@"scale: %f", self.scale);
+                NSLog(@"xValue: %f", xValue);
+                NSLog(@"yValue: %f", yValue);
+                NSLog(@"graphOrigin: %@", NSStringFromCGPoint(self.graphOrigin));
+                NSLog(@"drawingPoint: %@", NSStringFromCGPoint(drawingPoint));
+            }
             
             
             CGContextAddLineToPoint(context, drawingPoint.x, drawingPoint.y);
-         }
+        }
         
         CGContextStrokePath(context);
     }
     
     UIGraphicsPopContext();
-    
-    //NSLog(@"DONE ***************************************************");
 }
 
 @end
