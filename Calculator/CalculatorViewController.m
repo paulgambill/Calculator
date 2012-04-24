@@ -144,7 +144,7 @@
           withBarButtonItem:(UIBarButtonItem *)barButtonItem 
        forPopoverController:(UIPopoverController *)pc
 {
-    barButtonItem.title = self.title;
+    barButtonItem.title = @"Calculator"; //self.title;
     [self splitViewBarButtonItemPresenter].splitviewBarButtonItem = barButtonItem;
 }
 

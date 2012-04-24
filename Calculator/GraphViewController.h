@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "GraphView.h"
+#import "SplitViewBarButtonItemPresenter.h"
 
-@interface GraphViewController : UIViewController <GraphViewDelegate>
+@interface GraphViewController : UIViewController <GraphViewDelegate, SplitViewBarButtonItemPresenter>
+
 @property (nonatomic, readonly) id program;
 @property (nonatomic, weak) IBOutlet GraphView *graphView;
 

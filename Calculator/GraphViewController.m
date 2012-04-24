@@ -10,13 +10,14 @@
 #import "CalculatorBrain.h"
 
 @interface GraphViewController () <GraphViewDelegate>
-
+@property (nonatomic, weak) IBOutlet UIToolbar *toolbar;
 @end
 
 @implementation GraphViewController
 @synthesize program = _program;
 @synthesize graphView = _graphView;
-
+@synthesize splitviewBarButtonItem = _splitviewBarButtonItem;
+@synthesize toolbar = _toolbar;
 
 - (void)setGraphView:(GraphView *)graphView
 {
@@ -65,6 +66,18 @@
     }
     
     return yValue;
+}
+
+- (void)setSplitviewBarButtonItem:(UIBarButtonItem *)splitviewBarButtonItem
+{
+    if (_splitviewBarButtonItem != splitviewBarButtonItem) 
+    {
+        NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+        if (_splitviewBarButtonItem) [toolbarItems removeObject:_splitviewBarButtonItem];
+        if (splitviewBarButtonItem) [toolbarItems insertObject:splitviewBarButtonItem atIndex:0];
+        self.toolbar.items = toolbarItems;
+        _splitviewBarButtonItem = splitviewBarButtonItem;
+    }
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
