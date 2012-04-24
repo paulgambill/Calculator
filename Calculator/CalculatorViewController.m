@@ -108,7 +108,10 @@
 }
 - (IBAction)ipadGraphPressed:(UIButton *)sender 
 {
-    
+    if ([self splitViewGraphViewController])
+    {
+        [[self.splitViewController.viewControllers lastObject] setProgram:self.brain.program];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
