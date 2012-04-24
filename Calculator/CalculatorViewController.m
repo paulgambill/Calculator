@@ -114,6 +114,36 @@
     }
 }
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.splitViewController.delegate = self;
+}
+
+
+- (BOOL)splitViewController:(UISplitViewController *)svc 
+   shouldHideViewController:(UIViewController *)vc 
+              inOrientation:(UIInterfaceOrientation)orientation
+{
+    return NO;
+}
+
+- (void)splitViewController:(UISplitViewController *)svc 
+     willHideViewController:(UIViewController *)aViewController 
+          withBarButtonItem:(UIBarButtonItem *)barButtonItem 
+       forPopoverController:(UIPopoverController *)pc
+{
+    barButtonItem.title = self.title;
+    //tell the detail view to put this button up
+}
+
+- (void)splitViewController:(UISplitViewController *)svc 
+     willShowViewController:(UIViewController *)aViewController 
+  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    //tell the detail view to take the button away
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     //if iPad allow full rotation for splitviewcontroller
