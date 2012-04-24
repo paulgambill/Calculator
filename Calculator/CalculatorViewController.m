@@ -9,6 +9,7 @@
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
 #import "GraphViewController.h"
+#import "SplitViewBarButtonItemPresenter.h"
 
 @interface CalculatorViewController()
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
@@ -120,12 +121,22 @@
     self.splitViewController.delegate = self;
 }
 
+- (id <SplitViewBarButtonItemPresenter>)splitViewBarButtonItemPresenter
+{
+    id detailVC = [self.splitViewController.viewControllers lastObject];
+    if (![detailVC conformsToProtocol:@protocol(SplitViewBarButtonItemPresenter)])
+    {
+        detailVC = nil;
+    }
+    return detailVC;
+}
+
 
 - (BOOL)splitViewController:(UISplitViewController *)svc 
    shouldHideViewController:(UIViewController *)vc 
               inOrientation:(UIInterfaceOrientation)orientation
 {
-    return NO;
+    return [self splitViewBarButtonItemPresenter] ? UIInterfaceOrientationIsPortrait(orientation) : NO;
 }
 
 - (void)splitViewController:(UISplitViewController *)svc 
@@ -134,14 +145,14 @@
        forPopoverController:(UIPopoverController *)pc
 {
     barButtonItem.title = self.title;
-    //tell the detail view to put this button up
+    [self splitViewBarButtonItemPresenter].splitviewBarButtonItem = barButtonItem;
 }
 
 - (void)splitViewController:(UISplitViewController *)svc 
      willShowViewController:(UIViewController *)aViewController 
   invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
-    //tell the detail view to take the button away
+    [self splitViewBarButtonItemPresenter].splitviewBarButtonItem = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
