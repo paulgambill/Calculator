@@ -35,6 +35,17 @@
     [segue.destinationViewController setProgram:self.brain.program];
 }
 
+- (GraphViewController *)splitViewGraphViewController
+{
+    id gvc = [self.splitViewController.viewControllers lastObject];
+    if (![gvc isKindOfClass:[GraphViewController class]]) 
+    {
+        gvc = nil;
+    }
+    
+    return gvc;
+}
+
 - (IBAction)digitPressed:(UIButton *)sender 
 {
     NSString *digit = [sender currentTitle];
@@ -95,11 +106,22 @@
         }
     }
 }
+- (IBAction)ipadGraphPressed:(UIButton *)sender 
+{
+    
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
+    //if iPad allow full rotation for splitviewcontroller
+    if ([self splitViewGraphViewController])
+    {
+        return YES;
+    }
+    //else iPhone allow only vertical view
+    else {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
+    }
 }
 
 @end

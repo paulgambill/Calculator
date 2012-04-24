@@ -439,6 +439,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="ipadGraphPressed:" destination="W04-MS-yhc" eventType="touchUpInside" id="oGY-t8-s4v"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -451,7 +454,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1112" y="-655"/>
+            <point key="canvasLocation" x="1116" y="-681"/>
         </scene>
     </scenes>
     <classes>
