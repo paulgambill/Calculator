@@ -112,6 +112,27 @@
 - (void)calculatorProgramsTableViewController:(CalculatorProgramsTableViewController *)sender choseProgram:(id)program
 {
     self.program = program;
+    // if you wanted to close the popover when a graph was selected
+    // you could uncomment the following line
+    // you'd probably want to set self.popoverController = nil after doing so
+    // [self.popoverController dismissPopoverAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES]; // added after lecture to support iPhone
+}
+
+- (void)calculatorProgramsTableViewController:(CalculatorProgramsTableViewController *)sender
+                               deletedProgram:(id)program
+{
+    NSString *deletedProgramDescription = [CalculatorBrain descriptionOfProgram:program];
+    NSMutableArray *favorites = [NSMutableArray array];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    for (id program in [defaults objectForKey:FAVORITES_KEY]) {
+        if (![[CalculatorBrain descriptionOfProgram:program] isEqualToString:deletedProgramDescription]) {
+            [favorites addObject:program];
+        }
+    }
+    [defaults setObject:favorites forKey:FAVORITES_KEY];
+    [defaults synchronize];
+    sender.programs = favorites;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
