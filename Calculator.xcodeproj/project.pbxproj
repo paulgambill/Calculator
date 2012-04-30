@@ -12,6 +12,7 @@
 		F46CDED41513B95A00F5B327 /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46CDED31513B95A00F5B327 /* GraphViewController.m */; };
 		F46CDED71513BA2700F5B327 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = F46CDED61513BA2700F5B327 /* GraphView.m */; };
 		F47FC3B015473C87004506A1 /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47FC3AE15473C87004506A1 /* iPad.storyboard */; };
+		F47FC41D154F3BA8004506A1 /* CalculatorProgramsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47FC41C154F3BA8004506A1 /* CalculatorProgramsTableViewController.m */; };
 		F48F36D714EB348600ECCF49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48F36D614EB348600ECCF49 /* UIKit.framework */; };
 		F48F36D914EB348600ECCF49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48F36D814EB348600ECCF49 /* Foundation.framework */; };
 		F48F36DB14EB348600ECCF49 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48F36DA14EB348600ECCF49 /* CoreGraphics.framework */; };
@@ -32,6 +33,8 @@
 		F46CDED61513BA2700F5B327 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
 		F47FC3AF15473C87004506A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPad.storyboard; sourceTree = "<group>"; };
 		F47FC3BB15476B40004506A1 /* SplitViewBarButtonItemPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplitViewBarButtonItemPresenter.h; sourceTree = "<group>"; };
+		F47FC41B154F3BA8004506A1 /* CalculatorProgramsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorProgramsTableViewController.h; sourceTree = "<group>"; };
+		F47FC41C154F3BA8004506A1 /* CalculatorProgramsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorProgramsTableViewController.m; sourceTree = "<group>"; };
 		F48F36D214EB348600ECCF49 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F48F36D614EB348600ECCF49 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F48F36D814EB348600ECCF49 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -107,6 +110,8 @@
 				F47FC3BB15476B40004506A1 /* SplitViewBarButtonItemPresenter.h */,
 				F46CDECE1513B6A200F5B327 /* AxesDrawer.h */,
 				F46CDECF1513B6A200F5B327 /* AxesDrawer.m */,
+				F47FC41B154F3BA8004506A1 /* CalculatorProgramsTableViewController.h */,
+				F47FC41C154F3BA8004506A1 /* CalculatorProgramsTableViewController.m */,
 				F48F36DD14EB348600ECCF49 /* Supporting Files */,
 			);
 			path = Calculator;
@@ -193,6 +198,7 @@
 				F46CDED01513B6A200F5B327 /* AxesDrawer.m in Sources */,
 				F46CDED41513B95A00F5B327 /* GraphViewController.m in Sources */,
 				F46CDED71513BA2700F5B327 /* GraphView.m in Sources */,
+				F47FC41D154F3BA8004506A1 /* CalculatorProgramsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

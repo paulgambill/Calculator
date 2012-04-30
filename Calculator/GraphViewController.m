@@ -8,9 +8,11 @@
 
 #import "GraphViewController.h"
 #import "CalculatorBrain.h"
+#import "CalculatorProgramsTableViewController.h"
 
-@interface GraphViewController () <GraphViewDelegate>
+@interface GraphViewController () <GraphViewDelegate, CalculatorProgramsTableViewControllerDelegate>
 @property (nonatomic, weak) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, strong) UIPopoverController *popoverController;
 @end
 
 @implementation GraphViewController
@@ -18,6 +20,9 @@
 @synthesize graphView = _graphView;
 @synthesize splitviewBarButtonItem = _splitviewBarButtonItem;
 @synthesize toolbar = _toolbar;
+@synthesize popoverController;
+
+#define FAVORITES_KEY @"GraphViewController.Favorites"
 
 - (void)setGraphView:(GraphView *)graphView
 {
@@ -78,6 +83,35 @@
         self.toolbar.items = toolbarItems;
         _splitviewBarButtonItem = splitviewBarButtonItem;
     }
+}
+
+- (IBAction)addToFavorites:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favorites = [[defaults objectForKey:FAVORITES_KEY] mutableCopy];
+    if (!favorites) favorites = [NSMutableArray array];
+    [favorites addObject:self.program];
+    [defaults setObject:favorites forKey:FAVORITES_KEY];
+    [defaults synchronize];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Show Favorite Graphs"]) {
+        
+        if ([segue isKindOfClass:[UIStoryboardPopoverSegue class]]) {
+            UIStoryboardPopoverSegue *popoverSegue = (UIStoryboardSegue *)segue;
+            [self.popoverController dismissPopoverAnimated:YES];
+            self.popoverController = popoverSegue.popoverController;
+        }
+        NSArray *programs = [[NSUserDefaults standardUserDefaults] objectForKey:FAVORITES_KEY];
+        [segue.destinationViewController setPrograms:programs];
+        [segue.destinationViewController setDelegate:self];
+    }
+}
+
+- (void)calculatorProgramsTableViewController:(CalculatorProgramsTableViewController *)sender choseProgram:(id)program
+{
+    self.program = program;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
