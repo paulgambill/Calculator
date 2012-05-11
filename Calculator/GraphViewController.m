@@ -35,8 +35,9 @@
     [self.graphView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pan:)]];
     
     //enable tripletap to center the graph origin
-    [self.graphView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(tripleTap:)]];
-    
+    UITapGestureRecognizer *tapRecognizer =  [[UITapGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(tripleTap:)];
+    tapRecognizer.numberOfTapsRequired = 3;
+    [self.graphView addGestureRecognizer:tapRecognizer];
     self.graphView.dataSource = self;
 }
 

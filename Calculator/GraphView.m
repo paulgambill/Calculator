@@ -112,7 +112,7 @@
 //triple tap to center the origin at tap
 - (void)tripleTap:(UITapGestureRecognizer *)gesture
 {
-    gesture.numberOfTapsRequired = 3;
+    //gesture.numberOfTapsRequired = 3;
     
     if (gesture.state == UIGestureRecognizerStateEnded)
     {
