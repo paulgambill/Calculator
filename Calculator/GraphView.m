@@ -154,7 +154,7 @@
     UIGraphicsPushContext(context);
     
     //draws axes on the graph view
-    [AxesDrawer drawAxesInRect:[[UIScreen mainScreen] bounds] originAtPoint:[self graphOrigin] scale:[self scale]];
+    [AxesDrawer drawAxesInRect:self.bounds originAtPoint:self.graphOrigin scale:self.scale];
     
     // point for drawing
     CGPoint drawingPoint;
